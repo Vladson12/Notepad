@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
  * Created by vladd on 09.05.2016.
  */
 public class CancelButtonListener implements ActionListener {
-    public FontDialog dialog;
+    private final FontDialog dialog;
 
     public CancelButtonListener(FontDialog dialog) {
         this.dialog = dialog;

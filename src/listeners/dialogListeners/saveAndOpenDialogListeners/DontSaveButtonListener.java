@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
  * Created by vladd on 10.05.2016.
  */
 public class DontSaveButtonListener implements ActionListener {
-    SaveAndOpenDialog dialog;
-    NotepadFrame ui;
+    private final SaveAndOpenDialog dialog;
+    private final NotepadFrame ui;
 
     public DontSaveButtonListener(SaveAndOpenDialog dialog, NotepadFrame ui) {
         this.dialog = dialog;

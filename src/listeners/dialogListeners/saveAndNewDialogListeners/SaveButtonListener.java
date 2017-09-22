@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
  * Created by vladd on 10.05.2016.
  */
 public class SaveButtonListener implements ActionListener {
-    NotepadFrame ui;
-    SaveAndNewDialog dialog;
+    private final NotepadFrame ui;
+    private final SaveAndNewDialog dialog;
 
     static int count = 0;
 

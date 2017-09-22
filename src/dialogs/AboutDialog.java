@@ -14,10 +14,9 @@ public class AboutDialog extends JDialog {
     private static final int DEFAULT_WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.3);
     private static final int DEFAULT_HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().height * 0.3);
 
-    private NotepadFrame ui;
     public AboutDialog(NotepadFrame ui) {
 
-        this.ui = ui;
+        NotepadFrame ui1 = ui;
 
         setTitle(NotepadFrame.getAppName() + ": information");
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);

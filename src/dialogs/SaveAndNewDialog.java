@@ -5,9 +5,6 @@ import listeners.dialogListeners.saveAndNewDialogListeners.DontSaveButtonListene
 import listeners.dialogListeners.saveAndNewDialogListeners.CancelButtonListener;
 import ui.NotepadFrame;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * Created by vladd on 10.05.2016.
  */

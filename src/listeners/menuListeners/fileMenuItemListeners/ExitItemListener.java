@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Created by vladd on 10.05.2016.
  */
 public class ExitItemListener implements ActionListener {
-    private NotepadFrame ui;
+    private final NotepadFrame ui;
 
     public ExitItemListener(NotepadFrame ui) {
         this.ui = ui;

@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Created by vladd on 09.05.2016.
  */
 public class TracingListListener implements ActionListener {
-    FontDialog dialog;
+    private final FontDialog dialog;
 
     public TracingListListener(FontDialog dialog) {
         this.dialog = dialog;

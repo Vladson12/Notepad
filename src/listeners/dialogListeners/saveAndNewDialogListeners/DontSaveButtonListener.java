@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
  * Created by vladd on 10.05.2016.
  */
 public class DontSaveButtonListener implements ActionListener {
-    SaveAndNewDialog dialog;
-    NotepadFrame ui;
+    private final SaveAndNewDialog dialog;
+    private final NotepadFrame ui;
 
     public DontSaveButtonListener(SaveAndNewDialog dialog, NotepadFrame ui) {
         this.dialog = dialog;

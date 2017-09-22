@@ -4,23 +4,21 @@ import ui.NotepadFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by vladd on 11.05.2016.
  */
-public abstract class SaveAndCloseFileDialog extends JDialog {
+abstract class SaveAndCloseFileDialog extends JDialog {
     private static final int DEFAULT_WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.3);
     private static final int DEFAULT_HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().height * 0.15);
 
-    private NotepadFrame ui;
+    private final NotepadFrame ui;
 
     private JButton saveButton;
     private JButton dontSaveButton;
     private JButton cancelButton;
 
-    public SaveAndCloseFileDialog(NotepadFrame ui) {
+    SaveAndCloseFileDialog(NotepadFrame ui) {
         this.ui = ui;
 
 //        setTitle("Save and close");
@@ -34,7 +32,7 @@ public abstract class SaveAndCloseFileDialog extends JDialog {
 
     }
 
-    protected void prepareContent() {
+    void prepareContent() {
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
         JLabel question = new JLabel("Do you want to save changes in file:");
@@ -63,19 +61,19 @@ public abstract class SaveAndCloseFileDialog extends JDialog {
 
     protected abstract void addButtonListeners();
 
-    public JButton getSaveButton() {
+    JButton getSaveButton() {
         return saveButton;
     }
 
-    public JButton getDontSaveButton() {
+    JButton getDontSaveButton() {
         return dontSaveButton;
     }
 
-    public JButton getCancelButton() {
+    JButton getCancelButton() {
         return cancelButton;
     }
 
-    public NotepadFrame getUi() {
+    NotepadFrame getUi() {
         return ui;
     }
 }

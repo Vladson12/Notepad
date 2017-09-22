@@ -1,0 +1,289 @@
+<html>
+<head>
+<title>NotepadFrame.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+NotepadFrame.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">ui; 
+ 
+</span><span class="s0">import </span><span class="s1">listeners.NotepadFrameWindowListener; 
+</span><span class="s0">import </span><span class="s1">listeners.menuListeners.fileMenuItemListeners.*; 
+</span><span class="s0">import </span><span class="s1">listeners.menuListeners.helpMenuItemListeners.AboutItemListener; 
+</span><span class="s0">import </span><span class="s1">listeners.menuListeners.viewMenuItemListeners.DarkThemeItemListener; 
+</span><span class="s0">import </span><span class="s1">listeners.menuListeners.viewMenuItemListeners.DefaultThemeItemListener; 
+</span><span class="s0">import </span><span class="s1">listeners.menuListeners.viewMenuItemListeners.FontItemListener; 
+ 
+</span><span class="s0">import </span><span class="s1">javax.swing.*; 
+</span><span class="s0">import </span><span class="s1">java.awt.*; 
+</span><span class="s0">import </span><span class="s1">java.io.*; 
+ 
+</span><span class="s2">/** 
+ * Created by vladd on 07.05.2016. 
+ */</span><span class="s1"> 
+ 
+ 
+</span><span class="s0">public class </span><span class="s1">NotepadFrame </span><span class="s0">extends </span><span class="s1">JFrame { 
+    </span><span class="s0">public enum </span><span class="s1">Theme {Default, Dark} 
+ 
+    </span><span class="s0">private static final int </span><span class="s1">DEFAULT_WIDTH = (</span><span class="s0">int</span><span class="s1">) (Toolkit.getDefaultToolkit().getScreenSize().width * </span><span class="s3">0.5</span><span class="s1">); 
+    </span><span class="s0">private static final int </span><span class="s1">DEFAULT_HEIGHT = (</span><span class="s0">int</span><span class="s1">) (Toolkit.getDefaultToolkit().getScreenSize().height * </span><span class="s3">0.7</span><span class="s1">); 
+    </span><span class="s0">private static final </span><span class="s1">Font DEFAULT_FONT = </span><span class="s0">new </span><span class="s1">Font(</span><span class="s4">&quot;Default&quot;</span><span class="s1">, Font.PLAIN, </span><span class="s3">15</span><span class="s1">); 
+    </span><span class="s0">private static final </span><span class="s1">String NEW_FILE_NAME = </span><span class="s4">&quot;Unnamed&quot;</span><span class="s1">; 
+    </span><span class="s0">private static final </span><span class="s1">String APP_NAME = </span><span class="s4">&quot;NotePad&quot;</span><span class="s1">; 
+    </span><span class="s0">private static final </span><span class="s1">String NEW_FILE_NAME_AND_APP_NAME_SEPARATOR = </span><span class="s4">&quot; - &quot;</span><span class="s1">; 
+    </span><span class="s0">private static final </span><span class="s1">String APP_VERSION = </span><span class="s4">&quot;1.0&quot;</span><span class="s1">; 
+    </span><span class="s0">private static final </span><span class="s1">String APP_DEVELOPER = </span><span class="s4">&quot;Vladislav Magomedov&quot;</span><span class="s1">; 
+    </span><span class="s0">private static final </span><span class="s1">String APP_DEVELOPERS_EMAIL = </span><span class="s4">&quot;vladdmagg94@yandex.ru&quot;</span><span class="s1">; 
+ 
+    </span><span class="s0">private </span><span class="s1">JTextArea textArea; 
+    </span><span class="s0">private </span><span class="s1">String savedText; 
+    </span><span class="s0">private </span><span class="s1">File file; 
+ 
+    </span><span class="s0">public </span><span class="s1">NotepadFrame() { 
+ 
+        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT); 
+        setLocationByPlatform(</span><span class="s0">true</span><span class="s1">); 
+        setTitle(NEW_FILE_NAME + NEW_FILE_NAME_AND_APP_NAME_SEPARATOR + APP_NAME); 
+        setIconImage(</span><span class="s0">new </span><span class="s1">ImageIcon(</span><span class="s4">&quot;resources</span><span class="s0">\\</span><span class="s4">Icon.png&quot;</span><span class="s1">).getImage()); 
+ 
+        prepareContent(); 
+ 
+        savedText = getText(); 
+        Font savedFont = getFont(); 
+ 
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); 
+        setTheme(Theme.Default); 
+ 
+        addWindowListener(</span><span class="s0">new </span><span class="s1">NotepadFrameWindowListener(</span><span class="s0">this</span><span class="s1">)); 
+    } 
+ 
+    </span><span class="s0">private void </span><span class="s1">prepareContent() { 
+ 
+        prepareMenuBar(); 
+        prepareTextArea(); 
+ 
+ 
+    } 
+ 
+    </span><span class="s0">private void </span><span class="s1">prepareTextArea() { 
+ 
+        textArea = </span><span class="s0">new </span><span class="s1">JTextArea(); 
+        textArea.setFont(DEFAULT_FONT); 
+ 
+        JScrollPane scroller = </span><span class="s0">new </span><span class="s1">JScrollPane(textArea); 
+        scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); 
+        scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS); 
+        add(scroller); 
+    } 
+ 
+    </span><span class="s0">private void </span><span class="s1">prepareMenuBar() { 
+        JMenuBar menuBar = </span><span class="s0">new </span><span class="s1">JMenuBar(); 
+ 
+ 
+</span><span class="s2">//        &quot;File&quot;</span><span class="s1"> 
+        JMenu fileMenu = </span><span class="s0">new </span><span class="s1">JMenu(</span><span class="s4">&quot;File&quot;</span><span class="s1">); 
+ 
+        JMenuItem newItem = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;New&quot;</span><span class="s1">); 
+        JMenuItem openItem = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;Open...&quot;</span><span class="s1">); 
+        JMenuItem printItem = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;Print&quot;</span><span class="s1">); 
+        JMenuItem saveItem = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;Save&quot;</span><span class="s1">); 
+        JMenuItem saveAsItem = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;Save as...&quot;</span><span class="s1">); 
+        JMenuItem exitItem = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;Exit&quot;</span><span class="s1">); 
+ 
+        newItem.addActionListener(</span><span class="s0">new </span><span class="s1">NewItemListener(</span><span class="s0">this</span><span class="s1">)); 
+        openItem.addActionListener(</span><span class="s0">new </span><span class="s1">OpenItemListener(</span><span class="s0">this</span><span class="s1">)); 
+        printItem.addActionListener(</span><span class="s0">new </span><span class="s1">PrintItemListener(</span><span class="s0">this</span><span class="s1">)); 
+        saveItem.addActionListener(</span><span class="s0">new </span><span class="s1">SaveItemListener(</span><span class="s0">this</span><span class="s1">)); 
+        saveAsItem.addActionListener(</span><span class="s0">new </span><span class="s1">SaveAsItemListener(</span><span class="s0">this</span><span class="s1">)); 
+        exitItem.addActionListener(</span><span class="s0">new </span><span class="s1">ExitItemListener(</span><span class="s0">this</span><span class="s1">)); 
+ 
+        fileMenu.add(newItem); 
+        fileMenu.add(openItem); 
+        fileMenu.add(printItem); 
+        fileMenu.add(saveItem); 
+        fileMenu.add(saveAsItem); 
+        fileMenu.add(exitItem); 
+ 
+        menuBar.add(fileMenu); 
+ 
+ 
+</span><span class="s2">//        &quot;View&quot;</span><span class="s1"> 
+        JMenu viewMenu = </span><span class="s0">new </span><span class="s1">JMenu(</span><span class="s4">&quot;View&quot;</span><span class="s1">); 
+ 
+        JMenu themeMenu = </span><span class="s0">new </span><span class="s1">JMenu(</span><span class="s4">&quot;Theme&quot;</span><span class="s1">); 
+ 
+        JMenuItem defaultItem = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;Default&quot;</span><span class="s1">); 
+        JMenuItem darkItem = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;Dark&quot;</span><span class="s1">); 
+ 
+        themeMenu.add(defaultItem); 
+        themeMenu.add(darkItem); 
+ 
+        defaultItem.addActionListener(</span><span class="s0">new </span><span class="s1">DefaultThemeItemListener(</span><span class="s0">this</span><span class="s1">)); 
+        darkItem.addActionListener(</span><span class="s0">new </span><span class="s1">DarkThemeItemListener(</span><span class="s0">this</span><span class="s1">)); 
+ 
+        JMenuItem fontItem = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;Font&quot;</span><span class="s1">); 
+ 
+        fontItem.addActionListener(</span><span class="s0">new </span><span class="s1">FontItemListener(</span><span class="s0">this</span><span class="s1">)); 
+ 
+        viewMenu.add(themeMenu); 
+        viewMenu.add(fontItem); 
+ 
+        menuBar.add(viewMenu); 
+ 
+ 
+</span><span class="s2">//        &quot;Help&quot;</span><span class="s1"> 
+        JMenu helpMenu = </span><span class="s0">new </span><span class="s1">JMenu(</span><span class="s4">&quot;Help&quot;</span><span class="s1">); 
+ 
+        JMenuItem aboutItem = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;About&quot;</span><span class="s1">); 
+ 
+        aboutItem.addActionListener(</span><span class="s0">new </span><span class="s1">AboutItemListener(</span><span class="s0">this</span><span class="s1">)); 
+ 
+        helpMenu.add(aboutItem); 
+ 
+ 
+        menuBar.add(helpMenu); 
+ 
+ 
+ 
+        setJMenuBar(menuBar); 
+    } 
+ 
+    </span><span class="s0">public boolean </span><span class="s1">isSaved() { 
+        </span><span class="s0">return </span><span class="s1">(file != </span><span class="s0">null</span><span class="s1">); 
+    } 
+ 
+    </span><span class="s0">public static </span><span class="s1">String getAppName() { 
+        </span><span class="s0">return </span><span class="s1">APP_NAME; 
+    } 
+ 
+    </span><span class="s0">public static </span><span class="s1">String getAppVersion() { 
+        </span><span class="s0">return </span><span class="s1">APP_VERSION; 
+    } 
+ 
+    </span><span class="s0">public static </span><span class="s1">String getAppDeveloper() { 
+        </span><span class="s0">return </span><span class="s1">APP_DEVELOPER; 
+    } 
+ 
+    </span><span class="s0">public static </span><span class="s1">String getAppDevelopersEmail() { 
+        </span><span class="s0">return </span><span class="s1">APP_DEVELOPERS_EMAIL; 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">Font getTextAreaFont() { 
+        </span><span class="s0">return </span><span class="s1">textArea.getFont(); 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String getText() { 
+        </span><span class="s0">return </span><span class="s1">textArea.getText(); 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">Font getFont() {</span><span class="s0">return </span><span class="s1">textArea.getFont(); } 
+ 
+    </span><span class="s0">public </span><span class="s1">String getSavedText() { 
+        </span><span class="s0">return </span><span class="s1">savedText; 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">File getFile() { 
+        </span><span class="s0">return </span><span class="s1">file; 
+    } 
+ 
+    </span><span class="s0">private </span><span class="s1">String getFileName() { 
+        </span><span class="s0">if </span><span class="s1">(file != </span><span class="s0">null</span><span class="s1">) { 
+            </span><span class="s0">return </span><span class="s1">file.getName(); 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">return </span><span class="s1">NEW_FILE_NAME; 
+        } 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String getFilePath() { 
+        </span><span class="s0">if </span><span class="s1">(file != </span><span class="s0">null</span><span class="s1">) { 
+            </span><span class="s0">return </span><span class="s1">file.getAbsolutePath(); 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">return </span><span class="s1">NEW_FILE_NAME; 
+        } 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setTextAreaFont(Font font) { 
+        textArea.setFont(font); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setTheme(Theme theme) { 
+        </span><span class="s0">switch </span><span class="s1">(theme) { 
+            </span><span class="s0">case </span><span class="s1">Default: 
+                textArea.setForeground(Color.BLACK); 
+                textArea.setBackground(Color.WHITE); 
+                </span><span class="s0">break</span><span class="s1">; 
+            </span><span class="s0">case </span><span class="s1">Dark: 
+                textArea.setForeground(Color.WHITE); 
+                textArea.setBackground(Color.DARK_GRAY); 
+                </span><span class="s0">break</span><span class="s1">; 
+        } 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setFileToNull() { 
+        </span><span class="s0">this</span><span class="s1">.file = </span><span class="s0">null</span><span class="s1">; 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setFile(File file) { 
+        </span><span class="s0">this</span><span class="s1">.file = file; 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">resetTitle() { 
+        setTitle(getFileName() + NEW_FILE_NAME_AND_APP_NAME_SEPARATOR + APP_NAME); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">clearTextArea() { 
+        textArea.setText(</span><span class="s4">&quot;&quot;</span><span class="s1">); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">openFile(File file) { 
+        </span><span class="s0">try </span><span class="s1">{ 
+            StringBuilder buffer = </span><span class="s0">new </span><span class="s1">StringBuilder(); 
+            BufferedReader reader = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">FileReader(file)); 
+            String str; 
+            </span><span class="s0">while </span><span class="s1">((str = reader.readLine()) != </span><span class="s0">null</span><span class="s1">) { 
+               buffer.append(str).append(System.lineSeparator()); 
+            } 
+            reader.close(); 
+            textArea.setText(buffer.toString()); 
+        } </span><span class="s0">catch </span><span class="s1">(Exception ex) { 
+            ex.printStackTrace(); 
+        } 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">saveFile(File file) { 
+        </span><span class="s0">try </span><span class="s1">{ 
+            PrintWriter writer = </span><span class="s0">new </span><span class="s1">PrintWriter(</span><span class="s0">new </span><span class="s1">FileOutputStream(file)); 
+            writer.print(textArea.getText()); 
+            writer.flush(); 
+            writer.close(); 
+        } </span><span class="s0">catch </span><span class="s1">(IOException ex) { 
+            ex.printStackTrace(); 
+        } 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setSavedText(String savedText) { 
+        </span><span class="s0">this</span><span class="s1">.savedText = savedText; 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">paint(Graphics g) { 
+ 
+    } 
+} 
+</span></pre>
+</body>
+</html>

@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
  * Created by vladd on 09.05.2016.
  */
 public class OKButtonListener implements ActionListener {
-    FontDialog dialog;
+    private final FontDialog dialog;
 
     public OKButtonListener(FontDialog dialog) {
         this.dialog = dialog;

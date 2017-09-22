@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
  * Created by vladd on 10.05.2016.
  */
 public class CancelButtonListener implements ActionListener {
-    SaveAndOpenDialog dialog;
+    private final SaveAndOpenDialog dialog;
 
     public CancelButtonListener(SaveAndOpenDialog dialog) {
         this.dialog = dialog;

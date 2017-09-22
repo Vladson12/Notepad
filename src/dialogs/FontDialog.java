@@ -17,11 +17,9 @@ public class FontDialog extends JDialog {
     private static final int DEFAULT_WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.30);
     private static final int DEFAULT_HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().height * 0.40);
 
-    private NotepadFrame ui;
+    private final NotepadFrame ui;
     private Font selectedFont;
-    JComboBox<String> tracingList;
-    JComboBox<Integer> fontSizeList;
-    JLabel example;
+    private JLabel example;
 
     public FontDialog(NotepadFrame ui) {
         this.ui = ui;
@@ -56,7 +54,7 @@ public class FontDialog extends JDialog {
         tracingLabelPanel.add(tracingLabel);
 
 
-        tracingList = new JComboBox<>();
+        JComboBox<String> tracingList = new JComboBox<>();
         String normalFont = "Normal";
         String boldFont = "Bold";
         String italicFont = "Italic";
@@ -77,7 +75,7 @@ public class FontDialog extends JDialog {
         JPanel sizeLabelPanel = new JPanel();
         sizeLabelPanel.add(sizeLabel);
 
-        fontSizeList = new JComboBox<>();
+        JComboBox<Integer> fontSizeList = new JComboBox<>();
         for (int i = 1; i < 101; i++) {
             fontSizeList.addItem(i);
         }

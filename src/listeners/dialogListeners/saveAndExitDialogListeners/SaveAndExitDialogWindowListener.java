@@ -2,15 +2,14 @@ package listeners.dialogListeners.saveAndExitDialogListeners;
 
 import dialogs.SaveAndExitDialog;
 
-import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 /**
  * Created by vladd on 10.05.2016.
  */
-public class SaveAndExitDialogWindowListener implements WindowListener {
-    SaveAndExitDialog dialog;
+class SaveAndExitDialogWindowListener implements WindowListener {
+    private final SaveAndExitDialog dialog;
 
     public SaveAndExitDialogWindowListener(SaveAndExitDialog dialog) {
         this.dialog = dialog;

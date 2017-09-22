@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
  * Created by vladd on 08.05.2016.
  */
 public class FontItemListener implements ActionListener {
-    private NotepadFrame ui;
+    private final NotepadFrame ui;
 
     public FontItemListener(NotepadFrame ui) {
         this.ui = ui;

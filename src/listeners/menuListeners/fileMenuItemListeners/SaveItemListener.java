@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Created by vladd on 07.05.2016.
  */
 public class SaveItemListener implements ActionListener {
-    private NotepadFrame ui;
+    private final NotepadFrame ui;
 
     public SaveItemListener(NotepadFrame ui) {
         this.ui = ui;

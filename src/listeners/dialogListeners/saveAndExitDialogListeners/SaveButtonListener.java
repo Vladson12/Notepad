@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
  * Created by vladd on 10.05.2016.
  */
 public class SaveButtonListener implements ActionListener {
-    NotepadFrame ui;
-    SaveAndExitDialog dialog;
+    private final NotepadFrame ui;
+    private final SaveAndExitDialog dialog;
 
     public SaveButtonListener(SaveAndExitDialog dialog, NotepadFrame ui) {
         this.ui = ui;

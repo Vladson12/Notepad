@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
  * Created by vladd on 07.05.2016.
  */
 public class OpenItemListener implements ActionListener {
-    private NotepadFrame ui;
+    private final NotepadFrame ui;
 
     public OpenItemListener(NotepadFrame ui) {
         this.ui = ui;

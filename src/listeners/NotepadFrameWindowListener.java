@@ -10,7 +10,7 @@ import java.awt.event.WindowListener;
  * Created by vladd on 10.05.2016.
  */
 public class NotepadFrameWindowListener implements WindowListener {
-    NotepadFrame ui;
+    private final NotepadFrame ui;
 
     public NotepadFrameWindowListener(NotepadFrame ui) {
         this.ui = ui;

@@ -27,7 +27,7 @@ public class NotepadFrame extends JFrame {
     private static final String NEW_FILE_NAME_AND_APP_NAME_SEPARATOR = " - ";
     private static final String APP_VERSION = "1.0";
     private static final String APP_DEVELOPER = "Vladislav Magomedov";
-    public static final String APP_DEVELOPERS_EMAIL = "vladdmagg94@yandex.ru";
+    private static final String APP_DEVELOPERS_EMAIL = "vladdmagg94@yandex.ru";
 
     private JTextArea textArea;
     private String savedText;
@@ -43,6 +43,7 @@ public class NotepadFrame extends JFrame {
         prepareContent();
 
         savedText = getText();
+        Font savedFont = getFont();
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setTheme(Theme.Default);
@@ -78,18 +79,21 @@ public class NotepadFrame extends JFrame {
 
         JMenuItem newItem = new JMenuItem("New");
         JMenuItem openItem = new JMenuItem("Open...");
+        JMenuItem printItem = new JMenuItem("Print");
         JMenuItem saveItem = new JMenuItem("Save");
         JMenuItem saveAsItem = new JMenuItem("Save as...");
         JMenuItem exitItem = new JMenuItem("Exit");
 
         newItem.addActionListener(new NewItemListener(this));
         openItem.addActionListener(new OpenItemListener(this));
+        printItem.addActionListener(new PrintItemListener(this));
         saveItem.addActionListener(new SaveItemListener(this));
         saveAsItem.addActionListener(new SaveAsItemListener(this));
         exitItem.addActionListener(new ExitItemListener(this));
 
         fileMenu.add(newItem);
         fileMenu.add(openItem);
+        fileMenu.add(printItem);
         fileMenu.add(saveItem);
         fileMenu.add(saveAsItem);
         fileMenu.add(exitItem);
@@ -166,6 +170,8 @@ public class NotepadFrame extends JFrame {
         return textArea.getText();
     }
 
+    public Font getFont() {return textArea.getFont(); }
+
     public String getSavedText() {
         return savedText;
     }
@@ -174,7 +180,7 @@ public class NotepadFrame extends JFrame {
         return file;
     }
 
-    public String getFileName() {
+    private String getFileName() {
         if (file != null) {
             return file.getName();
         } else {
@@ -225,11 +231,11 @@ public class NotepadFrame extends JFrame {
 
     public void openFile(File file) {
         try {
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             BufferedReader reader = new BufferedReader(new FileReader(file));
-            String str = null;
+            String str;
             while ((str = reader.readLine()) != null) {
-               buffer.append(str + System.lineSeparator());
+               buffer.append(str).append(System.lineSeparator());
             }
             reader.close();
             textArea.setText(buffer.toString());
@@ -251,5 +257,10 @@ public class NotepadFrame extends JFrame {
 
     public void setSavedText(String savedText) {
         this.savedText = savedText;
+    }
+
+    @Override
+    public void paint(Graphics g) {
+
     }
 }

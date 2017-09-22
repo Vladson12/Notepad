@@ -18,9 +18,7 @@ public class EmailAdressLabelMouseListener implements MouseListener {
         if (Desktop.isDesktopSupported()) {
             try {
                 Desktop.getDesktop().mail(new URI("mailto:" + NotepadFrame.getAppDevelopersEmail()));
-            } catch (URISyntaxException ex) {
-
-            } catch (IOException ex) {
+            } catch (URISyntaxException | IOException ignored) {
 
             }
 
